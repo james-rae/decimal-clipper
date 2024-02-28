@@ -127,7 +127,6 @@ async function parser(path: string) {
             if (nextType === CHAR_DECIMAL) {
                 mode = MODE_POSTDOT;
                 decCount = 0;
-                //  console.log('Enter dec mode ' + readIdx);
             } else if (nextType !== CHAR_NUM) {
                 mode = MODE_HUNT;
             }
@@ -136,7 +135,7 @@ async function parser(path: string) {
             // a) another number, still in post-decimal
             //    - if count is <= max, take it
             //    - if higher, discard it
-            // b) anything else. kick back to new mode
+            // b) anything else. kick back to hunt mode
 
             let write = true;
 
@@ -172,7 +171,7 @@ async function parser(path: string) {
         }
     }
 
-    // write out stuff to two files
+    // write out stuff to file
     const outfileMain = path.slice(0, path.length - 5) + '.squash.json';
 
     await fs.promises.writeFile(outfileMain, outData, 'utf8');
